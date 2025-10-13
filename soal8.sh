@@ -47,6 +47,6 @@ zone "3.90.10.in-addr.arpa" {
 service named restart
 
 # Node lain
-dig -x 10.76.3.2
-dig -x 10.76.3.5
-dig -x 10.76.3.6
+dig -x 10.90.3.2
+dig -x 10.90.3.5
+dig -x 10.90.3.6

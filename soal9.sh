@@ -4,7 +4,7 @@ apt-get update && apt-get install -y nginx
 nano > /etc/nginx/sites-available/static.k53.com # Masukkan
 server {
     listen 80;
-    server_name static.k25.com lindon.k25.com;
+    server_name static.k53.com lindon.k53.com;
     
     root /var/www/static;
     index index.html;
