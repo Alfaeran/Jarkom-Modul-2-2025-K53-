@@ -81,28 +81,17 @@ zone "k53.com" {
 named-checkconf
 service named restart
 
-echo "nameserver 10.76.3.3" > /etc/resolv.conf
-echo "nameserver 10.76.3.4" >> /etc/resolv.conf
-echo "nameserver 10.76.3.4" >> /etc/resolv.conf
+echo "nameserver 10.90.3.3" > /etc/resolv.conf
+echo "nameserver 10.90.3.4" >> /etc/resolv.conf
+echo "nameserver 192.168.122.1" >> /etc/resolv.conf
 
 # di semua node selain eonwe dan tirion
 cat > /etc/resolv.conf << 'EOF'
 nameserver 10.90.3.3
 
-nameserver 192,168.122.1
+nameserver 192.168.122.1
 EOF
 
 # Tes ping k53.com
 ping k53.com
 # Jika berhasil, CTRL + C untuk kembali
-
-; A Records for all nodes
-eonwe.k53.com.      IN      A       10.90.1.1
-earendil.k53.com.   IN      A       10.90.1.2
-elwing.k53.com.     IN      A       10.90.1.3
-cirdan.k53.com.     IN      A       10.90.2.2
-elrond.k53.com.     IN      A       10.90.2.3
-maglor.k53.com.     IN      A       10.90.2.4
-sirion.k53.com.     IN      A       10.90.3.2
-lindon.k53.com.     IN      A       10.90.3.5
-vingilot.k53.com.   IN      A       10.90.3.6
