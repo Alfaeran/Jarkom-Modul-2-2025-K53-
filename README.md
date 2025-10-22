@@ -59,6 +59,314 @@ Modul 2 praktikum Jaringan Komputer berfokus pada implementasi infrastruktur web
 
 ---
 
+## No 1-7
+
+## 1
+
+Atur konfigurasi pada tiap node :
+
+- Node Eonwe
+```
+auto eth0
+iface eth0 inet dhcp
+
+auto eth1
+iface eth1 inet static
+    address 10.90.1.1
+    netmask 255.255.255.0
+
+auto eth2
+iface eth2 inet static
+    address 10.90.2.1
+    netmask 255.255.255.0
+
+auto eth3
+iface eth3 inet static
+    address 10.90.3.1
+    netmask 255.255.255.0
+```
+-  Node Earendil
+```
+auto eth0
+iface eth0 inet static
+    address 10.90.1.2
+    netmask 255.255.255.0
+    gateway 10.90.1.1
+    up echo nameserver 192.168.122.1 > /etc/resolv.conf
+```
+
+-  Node Elwing
+```
+auto eth0
+iface eth0 inet static
+    address 10.90.1.3
+    netmask 255.255.255.0
+    gateway 10.90.1.1
+    up echo nameserver 192.168.122.1 > /etc/resolv.conf
+```
+
+-  Node Cirdan
+```
+auto eth0
+iface eth0 inet static
+    address 10.90.2.2
+    netmask 255.255.255.0
+    gateway 10.90.2.1
+    up echo nameserver 192.168.122.1 > /etc/resolv.conf
+```
+
+-  Node Elrond
+```
+auto eth0
+iface eth0 inet static
+    address 10.90.2.3
+    netmask 255.255.255.0
+    gateway 10.90.2.1
+    up echo nameserver 192.168.122.1 > /etc/resolv.conf
+```
+
+-  Node Maglor
+```
+auto eth0
+iface eth0 inet static
+    address 10.90.2.4
+    netmask 255.255.255.0
+    gateway 10.90.2.1
+    up echo nameserver 192.168.122.1 > /etc/resolv.conf
+```
+
+-  Node Sirion
+```
+auto eth0
+iface eth0 inet static
+    address 10.90.3.2
+    netmask 255.255.255.0
+    gateway 10.90.3.1
+    up echo nameserver 192.168.122.1 > /etc/resolv.conf
+```
+
+-  Node Tirion
+```
+auto eth0
+iface eth0 inet static
+    address 10.90.3.3
+    netmask 255.255.255.0
+    gateway 10.90.3.1
+    up echo nameserver 192.168.122.1 > /etc/resolv.conf
+```
+
+-  Node Valmar
+```
+auto eth0
+iface eth0 inet static
+    address 10.90.3.4
+    netmask 255.255.255.0
+    gateway 10.90.3.1
+    up echo nameserver 192.168.122.1 > /etc/resolv.conf
+```
+-  Node Lindon
+```
+auto eth0
+iface eth0 inet static
+    address 10.90.3.5
+    netmask 255.255.255.0
+    gateway 10.90.3.1
+    up echo nameserver 192.168.122.1 > /etc/resolv.conf
+```
+
+- Node Vingilot
+```
+auto eth0
+iface eth0 inet static
+    address 10.90.3.6
+    netmask 255.255.255.0
+    gateway 10.90.3.1
+    up echo nameserver 192.168.122.1 > /etc/resolv.conf
+```
+
+## 2
+
+Jalankan
+```
+iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE -s 10.90.0.0/16
+```
+pada Kali Linux digunakan untuk membuat mesin bertindak sebagai gateway bagi jaringan lokal dengan IP 10.90.0.0/16. Aturan ini akan mengganti alamat sumber dari paket yang keluar melalui interface eth0 dengan IP milik interface tersebut, sehingga perangkat di jaringan privat bisa mengakses internet seolah-olah menggunakan IP publik dari mesin Kali. Teknik ini disebut masquerading, dan biasanya dipakai untuk internet sharing, menyembunyikan IP internal, atau membangun server NAT/router sederhana.
+
+Lalu jalankan
+```
+ping google.com -c 3
+```
+untuk memastikan perangkat di jaringan benar-benar bisa keluar ke internet lewat interface eth0.
+
+<img width="692" height="198" alt="image" src="https://github.com/user-attachments/assets/30bb2e0c-08f5-4373-8de0-f21276e27a70" />
+
+## 3
+
+Jalankan
+```
+iptables -A FORWARD -i eth1 -o eth2 -j ACCEPT
+iptables -A FORWARD -i eth2 -o eth1 -j ACCEPT
+iptables -A FORWARD -i eth1 -o eth3 -j ACCEPT
+iptables -A FORWARD -i eth3 -o eth1 -j ACCEPT
+iptables -A FORWARD -i eth2 -o eth3 -j ACCEPT
+iptables -A FORWARD -i eth3 -o eth2 -j ACCEPT
+```
+Aturan 'iptables -A FORWARD' yang kamu tulis berfungsi untuk mengizinkan lalu lintas antar interface jaringan (eth1, eth2, dan eth3). Dengan konfigurasi itu, paket yang masuk dari satu interface bisa diteruskan ke interface lain tanpa diblokir. Hasilnya, mesin Linux bertindak seperti router layer 3 yang menghubungkan ketiga jaringan tersebut.
+
+Setelah itu, dari Node Earendil, ping ke 10.90.2.2 dan 10.90.3.2
+<img width="511" height="277" alt="image" src="https://github.com/user-attachments/assets/b1cdcdc0-4ab7-4b70-934e-f0d7e26f8cd4" />
+
+## 4
+
+Pada Node Tirion, install bind9 dnsutils
+```
+apt-get update && apt-get install -y bind9 dnsutils
+```
+Lalu masuk ke
+```
+nano /etc/bind/named.conf.options
+```
+dan ganti semua konfigurasi dengan
+```
+options {
+    directory "/var/cache/bind";
+
+    forwarders {
+        192.168.122.1;
+    };
+
+    allow-transfer { 10.90.3.4; };
+    notify yes;
+    listen-on { any; };
+
+    dnssec-validation auto;
+    listen-on-v6 { any; };
+};
+```
+
+Setelah itu, masuk ke
+```
+nano /etc/bind/named.conf.local
+```
+dan ganti semua konfigurasi dengan
+```
+zone "k53.com" {
+    type master;
+    file "/etc/bind/zones/db.k53.com";
+    allow-transfer { 10.90.3.4; };
+    also-notify { 10.90.3.4; };
+    notify yes;
+};
+```
+Setelah mengganti konfigurasi options dan local, buat folder :
+```
+mkdir -p /etc/bind/zones
+```
+dan masuk ke
+```
+nano /etc/bind/zones/db.k53.com
+```
+lalu ganti semua konfigurasi dengan
+```
+$TTL    604800
+@       IN      SOA     ns1.k53.com. admin.k53.com. (
+                              2025101101         ; Serial
+                              604800         ; Refresh
+                              86400         ; Retry
+                              2419200         ; Expire
+                              604800 )       ; Negative Cache TTL
+;
+; Name Servers
+@       IN      NS      ns1.k53.com.
+@       IN      NS      ns2.k53.com.
+
+; A Records for Name Servers
+ns1.k53.com.        IN      A       10.90.3.3
+ns2.k53.com.        IN      A       10.90.3.4
+
+; A Record for apex (front door)
+@                   IN      A       10.90.3.2
+```
+Setelah itu, jalankan
+```
+chown -R bind:bind /etc/bind/zones
+named-checkconf
+named-checkzone k53.com /etc/bind/zones/db.k53.com
+service named restart
+```
+- 'chown -R bind:bind /etc/bind/zones' → mengubah kepemilikan folder zone file agar user bind bisa mengaksesnya.
+- 'named-checkconf' → mengecek apakah file konfigurasi utama BIND (biasanya '/etc/named.conf') valid tanpa error.
+- 'named-checkzone k53.com /etc/bind/zones/db.k53.com' → memverifikasi file zone untuk domain k53.com, memastikan format dan isinya benar.
+- 'service named restart' → me-restart layanan DNS BIND supaya perubahan konfigurasi dan zone file diterapkan.
+
+Singkatnya, perintah ini dipakai saat kamu menambahkan atau mengubah zone/domain di BIND, untuk memastikan tidak ada error lalu mengaktifkan konfigurasinya.
+
+Di Node Valmar, install tools yang sama dengan
+```
+apt-get update && apt-get install -y bind9 dnsutils
+```
+Setelah itu, masuk ke
+```
+nano /etc/bind/named.conf.options
+```
+dan ganti semua konfigurasi dengan
+```
+options {
+    directory "/var/cache/bind";
+
+    forwarders {
+        192.168.122.1;
+    };
+
+    dnssec-validation auto;
+    listen-on-v6 { any; };
+};
+```
+ganti juga konfigurasi localnya dengan 'nano /etc/bind/named.conf.local' lalu masukkan
+```
+zone "k53.com" {
+    type slave;
+    file "/etc/bind/zones/db.k53.com";
+    masters { 10.90.3.3; };
+};
+```
+Setelah itu, jalankan
+```
+named-checkconf
+service named restart
+```
+'named-checkconf' dipakai untuk memeriksa file konfigurasi BIND (DNS server) agar tidak ada kesalahan sintaks sebelum dijalankan. Jika ada error, perintah ini akan menampilkannya sehingga bisa diperbaiki lebih dulu. 'service named restart' digunakan untuk me-restart layanan BIND supaya perubahan konfigurasi langsung diterapkan
+
+Jalankan
+```
+echo "nameserver 10.90.3.3" > /etc/resolv.conf
+echo "nameserver 10.90.3.4" >> /etc/resolv.conf
+echo "nameserver 192.168.122.1" >> /etc/resolv.conf
+```
+Perintah itu menuliskan daftar DNS server ke file '/etc/resolv.conf', yang dipakai sistem Linux untuk menerjemahkan nama domain menjadi alamat IP. Baris pertama mengganti isi file dengan '10.90.3.3', lalu baris berikutnya menambahkan '10.90.3.4' dan '192.168.122.1' sebagai alternatif. Dengan begitu, komputer akan mencoba menggunakan server DNS tersebut secara berurutan saat melakukan resolusi nama.
+
+Setelah itu, di semua node selain eonwe dan tirion, jalankan 
+```
+cat > /etc/resolv.conf << 'EOF'
+nameserver 10.90.3.3
+
+nameserver 192.168.122.1
+EOF
+```
+Perintah itu dipakai untuk menulis ulang isi file '/etc/resolv.conf' dengan daftar server DNS yang akan digunakan sistem. Baris 'nameserver 10.90.3.3' dan 'nameserver 192.168.122.1' menentukan alamat server DNS yang akan dipanggil saat komputer menerjemahkan nama domain menjadi alamat IP. Jadi intinya, ini adalah cara manual untuk mengatur DNS resolver di Linux.
+
+Lalu ping k53.com
+```
+ping k53.com
+```
+Jika berhasil, CTRL + C untuk kembali
+
+<img width="512" height="283" alt="image" src="https://github.com/user-attachments/assets/c6ba9c61-4c6f-48a1-89e0-3d0d2353e6b6" />
+
+## 5
+
+
+
 ## SOAL 9 - LINDON STATIC WEB SERVER
 
 ### Deskripsi Soal
