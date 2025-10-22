@@ -245,9 +245,24 @@ chown -R www-data:www-data /var/www/sirion
 nginx -t
 service nginx reload
 
-curl http://www.k53.com/admin/
-curl -u admin:wrongpass http://www.k53.com/admin/
-curl -u admin:admin123 http://www.k53.com/admin/
-curl http://www.k53.com/
-curl http://www.k53.com/static
-curl http://www.k53.com/app
+# Install lynx for testing
+apt-get install -y lynx
+
+# Test
+echo "Testing Admin panel without credentials (should be denied)..."
+lynx -dump http://www.k53.com/admin/ 2>&1 || echo "Access denied as expected"
+
+echo "Testing with wrong credentials..."
+lynx -auth=admin:wrongpass -dump http://www.k53.com/admin/ 2>&1 || echo "Wrong credentials rejected"
+
+echo "Testing with correct credentials (admin:admin123)..."
+lynx -auth=admin:admin123 -dump http://www.k53.com/admin/
+
+echo "Testing homepage..."
+lynx -dump http://www.k53.com/
+
+echo "Testing static content..."
+lynx -dump http://www.k53.com/static
+
+echo "Testing app content..."
+lynx -dump http://www.k53.com/app

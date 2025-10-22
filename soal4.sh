@@ -83,7 +83,7 @@ service named restart
 
 echo "nameserver 10.76.3.3" > /etc/resolv.conf
 echo "nameserver 10.76.3.4" >> /etc/resolv.conf
-echo "nameserver 192.168.122.1" >> /etc/resolv.conf
+echo "nameserver 10.76.3.4" >> /etc/resolv.conf
 
 # di semua node selain eonwe dan tirion
 cat > /etc/resolv.conf << 'EOF'

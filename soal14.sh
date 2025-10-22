@@ -166,8 +166,16 @@ EOF
 
 chown -R www-data:www-data /var/www/app
 
-# Test 
-curl http://vingilot.k53.com/checkip
-curl http://www.k53.com/app/checkip
+# Install lynx for testing
+apt-get install -y lynx
 
+# Test - Display real IP via web
+echo "Testing checkip page via vingilot.k53.com..."
+lynx -dump http://vingilot.k53.com/checkip
+
+echo "Testing checkip page via www.k53.com/app/checkip..."
+lynx -dump http://www.k53.com/app/checkip
+
+# View access logs
+echo "Checking Vingilot access logs (should show client IP, not proxy IP)..."
 tail -20 /var/log/nginx/vingilot_access.log

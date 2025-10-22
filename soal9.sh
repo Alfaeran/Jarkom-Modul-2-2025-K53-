@@ -30,5 +30,12 @@ echo "tes" > /var/www/static/tes.txt
 nginx -t
 service nginx restart
 
-curl http://static.k53.com
-curl http://lindon.k53.com/annals/
+# Install lynx for testing
+apt-get install -y lynx
+
+# Test
+echo "Testing Lindon homepage..."
+lynx -dump http://static.k53.com
+
+echo "Testing Lindon /annals directory..."
+lynx -dump http://lindon.k53.com/annals/

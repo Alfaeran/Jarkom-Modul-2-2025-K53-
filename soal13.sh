@@ -68,8 +68,21 @@ EOF
 # Test
 nginx -t
 service nginx reload
-curl -I http://10.90.3.2/
-curl -I http://sirion.k53.com/
-curl -I http://www.k53.com/
-curl -I http://10.90.3.2/static
-curl -I http://sirion.k53.com/app
+
+# Install lynx for testing
+apt-get install -y lynx
+
+echo "Testing redirect from IP address..."
+lynx -dump -head http://10.90.3.2/ | grep -i "location\|302\|301"
+
+echo "Testing redirect from sirion.k53.com..."
+lynx -dump -head http://sirion.k53.com/ | grep -i "location\|302\|301"
+
+echo "Testing canonical domain www.k53.com..."
+lynx -dump http://www.k53.com/ | head -20
+
+echo "Testing static via canonical domain..."
+lynx -dump http://www.k53.com/static | head -20
+
+echo "Testing app via canonical domain..."
+lynx -dump http://www.k53.com/app | head -20

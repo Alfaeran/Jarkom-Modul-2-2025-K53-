@@ -261,6 +261,12 @@ nginx -t
 service nginx restart
 service php8.4-fpm restart
 
+# Install lynx for testing
+apt-get install -y lynx
+
 # Test
-curl http://app.k53.com
-curl http://app.k53.com/about
+echo "Testing Vingilot homepage..."
+lynx -dump http://app.k53.com
+
+echo "Testing Vingilot about page..."
+lynx -dump http://app.k53.com/about

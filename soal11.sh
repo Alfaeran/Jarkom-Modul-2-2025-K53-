@@ -180,12 +180,24 @@ nginx -t
 service nginx restart
 service nginx status
 
+# Install lynx for testing
+apt-get install -y lynx
+
 # Test
-curl http://www.k53.com
-curl http://sirion.k53.com
-curl http://www.k53.com/static
-curl http://www.k53.com/static/annals/
-curl http://www.k53.com/app
-curl http://www.k53.com/app/about
-curl -v http://www.k53.com/static 2>&1 | grep -i "host\|x-real-ip"
-curl -v http://www.k53.com/app 2>&1 | grep -i "host\|x-real-ip"
+echo "Testing Sirion homepage..."
+lynx -dump http://www.k53.com
+
+echo "Testing Sirion via sirion.k53.com..."
+lynx -dump http://sirion.k53.com
+
+echo "Testing static route /static..."
+lynx -dump http://www.k53.com/static
+
+echo "Testing static annals directory..."
+lynx -dump http://www.k53.com/static/annals/
+
+echo "Testing app route /app..."
+lynx -dump http://www.k53.com/app
+
+echo "Testing app about page..."
+lynx -dump http://www.k53.com/app/about
