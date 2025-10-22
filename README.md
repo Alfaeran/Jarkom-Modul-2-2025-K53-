@@ -59,8 +59,6 @@ Modul 2 praktikum Jaringan Komputer berfokus pada implementasi infrastruktur web
 
 ---
 
-## No 1-7
-
 ## 1
 
 Atur konfigurasi pada tiap node :
@@ -211,7 +209,7 @@ iptables -A FORWARD -i eth3 -o eth1 -j ACCEPT
 iptables -A FORWARD -i eth2 -o eth3 -j ACCEPT
 iptables -A FORWARD -i eth3 -o eth2 -j ACCEPT
 ```
-Aturan *iptables -A FORWARD* yang kamu tulis berfungsi untuk mengizinkan lalu lintas antar interface jaringan (eth1, eth2, dan eth3). Dengan konfigurasi itu, paket yang masuk dari satu interface bisa diteruskan ke interface lain tanpa diblokir. Hasilnya, mesin Linux bertindak seperti router layer 3 yang menghubungkan ketiga jaringan tersebut.
+Aturan `iptables -A FORWARD` yang kamu tulis berfungsi untuk mengizinkan lalu lintas antar interface jaringan (eth1, eth2, dan eth3). Dengan konfigurasi itu, paket yang masuk dari satu interface bisa diteruskan ke interface lain tanpa diblokir. Hasilnya, mesin Linux bertindak seperti router layer 3 yang menghubungkan ketiga jaringan tersebut.
 
 Setelah itu, dari Node Earendil, ping ke 10.90.2.2 dan 10.90.3.2
 <img width="511" height="277" alt="image" src="https://github.com/user-attachments/assets/b1cdcdc0-4ab7-4b70-934e-f0d7e26f8cd4" />
@@ -294,10 +292,10 @@ named-checkconf
 named-checkzone k53.com /etc/bind/zones/db.k53.com
 service named restart
 ```
-- *chown -R bind:bind /etc/bind/zones* → mengubah kepemilikan folder zone file agar user bind bisa mengaksesnya.
-- *named-checkconf* → mengecek apakah file konfigurasi utama BIND (biasanya '/etc/named.conf') valid tanpa error.
-- *named-checkzone k53.com /etc/bind/zones/db.k53.com* → memverifikasi file zone untuk domain k53.com, memastikan format dan isinya benar.
-- *service named restart* → me-restart layanan DNS BIND supaya perubahan konfigurasi dan zone file diterapkan.
+- `chown -R bind:bind /etc/bind/zones` → mengubah kepemilikan folder zone file agar user bind bisa mengaksesnya.
+- `named-checkconf` → mengecek apakah file konfigurasi utama BIND (biasanya '/etc/named.conf') valid tanpa error.
+- `named-checkzone k53.com /etc/bind/zones/db.k53.com` → memverifikasi file zone untuk domain k53.com, memastikan format dan isinya benar.
+- `service named restart` → me-restart layanan DNS BIND supaya perubahan konfigurasi dan zone file diterapkan.
 
 Singkatnya, perintah ini dipakai saat kamu menambahkan atau mengubah zone/domain di BIND, untuk memastikan tidak ada error lalu mengaktifkan konfigurasinya.
 
@@ -322,7 +320,7 @@ options {
     listen-on-v6 { any; };
 };
 ```
-ganti juga konfigurasi localnya dengan 'nano /etc/bind/named.conf.local' lalu masukkan
+ganti juga konfigurasi localnya dengan `nano /etc/bind/named.conf.local` lalu masukkan
 ```
 zone "k53.com" {
     type slave;
@@ -335,7 +333,7 @@ Setelah itu, jalankan
 named-checkconf
 service named restart
 ```
-'named-checkconf' dipakai untuk memeriksa file konfigurasi BIND (DNS server) agar tidak ada kesalahan sintaks sebelum dijalankan. Jika ada error, perintah ini akan menampilkannya sehingga bisa diperbaiki lebih dulu. 'service named restart' digunakan untuk me-restart layanan BIND supaya perubahan konfigurasi langsung diterapkan
+`named-checkconf` dipakai untuk memeriksa file konfigurasi BIND (DNS server) agar tidak ada kesalahan sintaks sebelum dijalankan. Jika ada error, perintah ini akan menampilkannya sehingga bisa diperbaiki lebih dulu. `service named restart` digunakan untuk me-restart layanan BIND supaya perubahan konfigurasi langsung diterapkan
 
 Jalankan
 ```
@@ -343,7 +341,7 @@ echo "nameserver 10.90.3.3" > /etc/resolv.conf
 echo "nameserver 10.90.3.4" >> /etc/resolv.conf
 echo "nameserver 192.168.122.1" >> /etc/resolv.conf
 ```
-Perintah itu menuliskan daftar DNS server ke file '/etc/resolv.conf', yang dipakai sistem Linux untuk menerjemahkan nama domain menjadi alamat IP. Baris pertama mengganti isi file dengan '10.90.3.3', lalu baris berikutnya menambahkan '10.90.3.4' dan '192.168.122.1' sebagai alternatif. Dengan begitu, komputer akan mencoba menggunakan server DNS tersebut secara berurutan saat melakukan resolusi nama.
+Perintah itu menuliskan daftar DNS server ke file `/etc/resolv.conf`, yang dipakai sistem Linux untuk menerjemahkan nama domain menjadi alamat IP. Baris pertama mengganti isi file dengan `10.90.3.3`, lalu baris berikutnya menambahkan `10.90.3.4` dan `192.168.122.1` sebagai alternatif. Dengan begitu, komputer akan mencoba menggunakan server DNS tersebut secara berurutan saat melakukan resolusi nama.
 
 Setelah itu, di semua node selain eonwe dan tirion, jalankan 
 ```
@@ -353,7 +351,7 @@ nameserver 10.90.3.3
 nameserver 192.168.122.1
 EOF
 ```
-Perintah itu dipakai untuk menulis ulang isi file '/etc/resolv.conf' dengan daftar server DNS yang akan digunakan sistem. Baris 'nameserver 10.90.3.3' dan 'nameserver 192.168.122.1' menentukan alamat server DNS yang akan dipanggil saat komputer menerjemahkan nama domain menjadi alamat IP. Jadi intinya, ini adalah cara manual untuk mengatur DNS resolver di Linux.
+Perintah itu dipakai untuk menulis ulang isi file `/etc/resolv.conf` dengan daftar server DNS yang akan digunakan sistem. Baris `nameserver 10.90.3.3` dan `nameserver 192.168.122.1` menentukan alamat server DNS yang akan dipanggil saat komputer menerjemahkan nama domain menjadi alamat IP. Jadi intinya, ini adalah cara manual untuk mengatur DNS resolver di Linux.
 
 Lalu ping k53.com
 ```
@@ -364,6 +362,176 @@ Jika berhasil, CTRL + C untuk kembali
 <img width="512" height="283" alt="image" src="https://github.com/user-attachments/assets/c6ba9c61-4c6f-48a1-89e0-3d0d2353e6b6" />
 
 ## 5
+
+Pastikan semua node sudah di rename pada GNS3. Setelah itu pada Node Tirion :
+masuk ke 
+```
+nano /etc/bind/zones/db.k53.com
+```
+lalu tambahkan
+```
+eonwe.k53.com.      IN      A       10.90.1.1
+earendil.k53.com.   IN      A       10.90.1.2
+elwing.k53.com.     IN      A       10.90.1.3
+cirdan.k53.com.     IN      A       10.90.2.2
+elrond.k53.com.     IN      A       10.90.2.3
+maglor.k53.com.     IN      A       10.90.2.4
+sirion.k53.com.     IN      A       10.90.3.2
+lindon.k53.com.     IN      A       10.90.3.5
+vingilot.k53.com.   IN      A       10.90.3.6
+```
+Setelah itu jalankan
+```
+named-checkzone k53.com /etc/bind/zones/db.k53.com
+service named restart
+```
+Perintah `named-checkzone k53.com /etc/bind/zones/db.k53.com` digunakan untuk memverifikasi file zone domain k53.com, memastikan format dan isinya valid. Jika hasil pengecekan tidak ada error, berarti zone file siap dipakai oleh BIND. Setelah itu, `service named restart` dijalankan untuk me-restart layanan DNS BIND agar perubahan konfigurasi dan zone yang baru langsung aktif
+
+Lalu, masuk ke node lain dan ping ke
+```
+ping sirion.k53.com
+ping earendil.k53.com
+```
+CTRL + C jika berhasil
+
+<img width="520" height="320" alt="image" src="https://github.com/user-attachments/assets/40daf309-f54d-4d44-844d-9b5c162121f8" />
+
+## 6
+
+Pada Node Tirion, jalankan
+```
+dig @10.90.3.3 k53.com SOA
+```
+Perintah dig @10.90.3.3 k53.com SOA digunakan untuk meminta record SOA (Start of Authority) dari domain k53.com langsung ke server DNS di alamat 10.90.3.3. Jika hasil query muncul, itu menunjukkan server DNS tersebut aktif dan mampu memberikan informasi authoritative untuk domain tersebut. Dengan begitu, konfigurasi zone k53.com sudah terbaca dan dijalankan oleh BIND.
+
+<img width="920" height="393" alt="image" src="https://github.com/user-attachments/assets/28bd2ccd-782b-49a9-af31-4c401385a930" />
+
+Pada Node Valmar, jalankan
+```
+echo "nameserver 127.0.0.1" > /etc/resolv.conf
+```
+lalu
+```
+dig @10.90.3.3 k53.com SOA
+```
+jika hasil query muncul, maka sudah sesuai juga.
+<img width="936" height="357" alt="image" src="https://github.com/user-attachments/assets/7d75f738-3b50-4701-9459-cc8807a55ca8" />
+Setelah itu, jalankan
+```
+mkdir -p /etc/bind/zones/
+chown bind:bind /etc/bind/zones/
+```
+Perintah `mkdir -p /etc/bind/zones/` digunakan untuk membuat direktori tempat menyimpan file zone DNS, termasuk jika folder induknya belum ada. Setelah itu, `chown bind:bind /etc/bind/zones/` mengubah kepemilikan direktori tersebut agar user dan grup bind bisa mengakses serta mengelolanya.
+
+Lalu jalankan
+```
+rndc retransfer k53.com
+ls -l /etc/bind/zones/db.k53.com
+cat /etc/bind/zones/db.k53.com
+```
+Perintah `rndc retransfer k53.com` digunakan untuk memaksa server DNS slave mengambil ulang (retransfer) zone k53.com dari master. Setelah itu, `ls -l /etc/bind/zones/db.k53.com` menampilkan detail file zone tersebut, seperti ukuran dan izin akses. Terakhir, `cat /etc/bind/zones/db.k53.com` digunakan untuk melihat langsung isi konfigurasi zone domain k53.com.
+
+<img width="928" height="642" alt="image" src="https://github.com/user-attachments/assets/ce683714-6e0f-43ea-ac4f-3675ec48f4ca" />
+
+## 7
+
+Pada Node Tirion, masuk ke
+```
+nano /etc/bind/zones/db.k53.com
+```
+lalu tambahkan konfigurasi
+```
+www.k53.com.        IN      CNAME   sirion.k53.com.
+static.k53.com.     IN      CNAME   lindon.k53.com.
+app.k53.com.        IN      CNAME   vingilot.k53.com.
+```
+Setelah itu, masih sama dengan sebelum-sebelumnya, jalankan
+```
+named-checzone k53.com /etc/bind/zones/db.k53.com
+service named restart
+```
+
+Masuk ke node yang beda, jalankan
+```
+dig www.k53.com
+dig static.k53.com
+dig app.k53.com
+```
+Perintah `dig www.k53.com`, `dig static.k53.com`, dan `dig app.k53.com` masing‑masing digunakan untuk melakukan query DNS terhadap subdomain www, static, dan app dari domain k53.com. Hasilnya akan menunjukkan apakah ketiga subdomain tersebut sudah memiliki record DNS yang valid, misalnya alamat IP (A record) atau jenis record lain yang dikonfigurasi. Dengan cara ini, kamu bisa memastikan setiap subdomain yang dibuat di zone k53.com benar‑benar terdaftar dan dapat diresolusi oleh server DNS.
+
+
+<img width="941" height="395" alt="image" src="https://github.com/user-attachments/assets/31aa382f-8208-489b-8832-95d7e000278d" />
+
+<img width="566" height="373" alt="image" src="https://github.com/user-attachments/assets/12b66cd2-f6ee-43bf-9b9b-a3c3acbda6da" />
+
+<img width="570" height="763" alt="image" src="https://github.com/user-attachments/assets/8bdf3d5a-74e1-4d6c-91b7-ab53d332726b" />
+
+## 8
+
+Pada Node Tirion, masuk ke
+```
+nano /etc/bind/zones/db.10.90.3
+```
+lalu masukkin konfigurasinya dengan
+```
+$TTL    604800
+@       IN      SOA     ns1.k53.com. admin.k53.com. (
+                              2025101101         ; Serial
+                              604800         ; Refresh
+                              86400         ; Retry
+                              2419200         ; Expire
+                              604800 )       ; Negative Cache TTL
+;
+; Name Servers
+@       IN      NS      ns1.k53.com.
+@       IN      NS      ns2.k53.com.
+
+; PTR Records
+2       IN      PTR     sirion.k53.com.
+3       IN      PTR     ns1.k53.com.
+4       IN      PTR     ns2.k53.com.
+5       IN      PTR     lindon.k53.com.
+6       IN      PTR     vingilot.k53.com.
+```
+Lalu jalankan
+```
+named-checkzone 3.90.10.in-addr.arpa /etc/bind/zones/db.10.90.3
+service named restart
+```
+Perintah `named-checkzone 3.90.10.in-addr.arpa /etc/bind/zones/db.10.90.3` digunakan untuk memverifikasi file reverse zone yang memetakan alamat IP ke nama domain. Dengan ini, kamu bisa memastikan konfigurasi PTR record di zone tersebut valid sebelum dijalankan oleh BIND.
+
+Pada Node Valmar, masuk ke
+```
+nano /etc/bind/named.conf.local
+```
+dan sesuaikan konfigurasinya dengan
+```
+zone "k53.com" {
+    type slave;
+    file "/etc/bind/zones/db.k53.com";
+    masters { 10.90.3.3; };
+};
+
+zone "3.90.10.in-addr.arpa" {
+    type slave;
+    file "db.10.90.3";
+    masters { 10.90.3.3; };
+```
+lalu jalankan `service named restart`
+
+Masuk ke Node lain dan jalankan
+```
+dig -x 10.90.3.2
+dig -x 10.90.3.5
+dig -x 10.90.3.6
+```
+Perintah `dig -x` digunakan untuk melakukan reverse DNS lookup, yaitu mencari nama domain berdasarkan alamat IP. Saat menjalankan `dig -x 10.90.3.2`, `dig -x 10.90.3.5`, dan `dig -x 10.90.3.6`, sistem akan menanyakan ke server DNS apakah ada PTR record untuk tiap alamat IP tersebut. Jika hasilnya muncul, berarti konfigurasi reverse zone sudah benar dan IP tersebut berhasil dipetakan ke nama host yang sesuai.
+
+<img width="751" height="356" alt="image" src="https://github.com/user-attachments/assets/57e01ff4-48e0-4fc4-8079-7b670c001a54" />
+
+<img width="757" height="362" alt="image" src="https://github.com/user-attachments/assets/aef38d71-adb1-4937-8891-a144203e27f1" />
+
+<img width="756" height="287" alt="image" src="https://github.com/user-attachments/assets/da96f8d6-3564-4579-9e58-fef8885198be" />
 
 
 
