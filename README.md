@@ -637,22 +637,6 @@ echo "Testing Lindon /annals directory..."
 lynx -dump http://lindon.k53.com/annals/
 ```
 
-### Bukti Pengerjaan
-
-**Tangkapan Layar Testing Soal 9:**
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                                                             │
-│  [Sisipkan screenshot soal9_lindon_static_web.png di sini] │
-│                                                             │
-│  Deskripsi: Menampilkan halaman static web server Lindon   │
-│  - Homepage accessible via static.k53.com                  │
-│  - Directory listing for /annals/ folder                   │
-│  - HTTP 200 status response                                │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
 
 ## SOAL 10 - VINGILOT DYNAMIC WEB SERVER
 
@@ -830,23 +814,7 @@ echo "Testing Vingilot about page..."
 lynx -dump http://app.k53.com/about
 ```
 
-### Bukti Pengerjaan
 
-**Tangkapan Layar Testing Soal 10:**
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                                                             │
-│  [Sisipkan screenshot soal10_vingilot_dynamic_web.png]     │
-│                                                             │
-│  Deskripsi: Menampilkan aplikasi PHP dinamis Vingilot      │
-│  - Homepage dapat diakses via app.k53.com                  │
-│  - About page dapat diakses via /about (tanpa .php)        │
-│  - PHP code berhasil dieksekusi                            │
-│  - Server information ditampilkan dengan benar             │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
 
 ## SOAL 11 - SIRION REVERSE PROXY
 
@@ -971,23 +939,6 @@ echo "Testing app route /app..."
 lynx -dump http://www.k53.com/app
 ```
 
-### Bukti Pengerjaan
-
-**Tangkapan Layar Testing Soal 11:**
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                                                             │
-│  [Sisipkan screenshot soal11_sirion_reverse_proxy.png]     │
-│                                                             │
-│  Deskripsi: Menampilkan reverse proxy Sirion               │
-│  - Gateway homepage dapat diakses                          │
-│  - Path /static berhasil di-route ke Lindon               │
-│  - Path /app berhasil di-route ke Vingilot                │
-│  - Header forwarding berfungsi dengan baik                │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
 
 ## SOAL 12 - ADMIN PANEL WITH BASIC AUTHENTICATION
 
@@ -1085,23 +1036,6 @@ echo "Testing with correct credentials (admin:admin123)..."
 lynx -auth=admin:admin123 -dump http://www.k53.com/admin/
 ```
 
-### Bukti Pengerjaan
-
-**Tangkapan Layar Testing Soal 12:**
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                                                             │
-│  [Sisipkan screenshot soal12_admin_panel_auth.png]         │
-│                                                             │
-│  Deskripsi: Menampilkan admin panel dengan authentication  │
-│  - Access without credentials: HTTP 401 Unauthorized       │
-│  - Access with correct credentials: HTTP 200 OK            │
-│  - Admin panel page menampilkan dengan benar               │
-│  - System status dan quick links visible                   │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
 
 
 ## SOAL 13 - CANONICALIZATION DOMAIN REDIRECT
@@ -1184,23 +1118,6 @@ echo "Testing static via canonical domain..."
 lynx -dump http://www.k53.com/static | head -20
 ```
 
-### Bukti Pengerjaan
-
-**Tangkapan Layar Testing Soal 13:**
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                                                             │
-│  [Sisipkan screenshot soal13_canonicalization.png]         │
-│                                                             │
-│  Deskripsi: Menampilkan redirect domain canonicalization   │
-│  - Request ke 10.90.3.2 -> 301 redirect ke www.k53.com     │
-│  - Request ke sirion.k53.com -> 301 redirect               │
-│  - Request ke www.k53.com -> 200 OK (no redirect)          │
-│  - Path tetap dipreservasi selama redirect                 │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
 
 
 ## SOAL 14 - REAL IP TRACKING
@@ -1329,26 +1246,6 @@ echo "Viewing Vingilot access logs..."
 tail -20 /var/log/nginx/vingilot_access.log
 ```
 
-### Bukti Pengerjaan
-
-**Tangkapan Layar Testing Soal 14:**
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                                                             │
-│  [Sisipkan screenshot soal14_real_ip_tracking.png]         │
-│                                                             │
-│  Deskripsi: Menampilkan real IP tracking pada Vingilot     │
-│  - Check IP page menampilkan IP information               │
-│  - REMOTE_ADDR menunjukkan IP client (setelah processing) │
-│  - X-Real-IP header berisi IP client asli                │
-│  - X-Forwarded-For menampilkan proxy chain                │
-│  - Access log mencatat IP client asli, bukan proxy IP     │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
-
-
 ## SOAL 15 - PERFORMANCE BENCHMARKING
 
 ### Deskripsi Soal
@@ -1462,34 +1359,6 @@ ab -n 500 -c 10 http://www.k53.com/app/ > benchmark_app.txt
 echo "Dynamic benchmark completed"
 
 echo "Results saved to benchmark_static.txt and benchmark_app.txt"
-```
-
-### Bukti Pengerjaan
-
-**Tangkapan Layar Testing Soal 15:**
-
-```
-┌──────────────────────────────────────────────────────────────┐
-│                                                              │
-│  [Sisipkan screenshot soal15_benchmarking.png]              │
-│                                                              │
-│  Deskripsi: Menampilkan hasil performance benchmarking      │
-│                                                              │
-│  Tabel Perbandingan:                                        │
-│  ┌──────────────────┬─────────────┬──────────────┐          │
-│  │ Metric          │ Dynamic     │ Static       │          │
-│  │ RPS             │ [X] req/sec │ [X] req/sec  │          │
-│  │ Resp Time       │ [X] ms      │ [X] ms       │          │
-│  │ Transfer Rate   │ [X] KB/sec  │ [X] KB/sec   │          │
-│  │ Failed Requests │ 0           │ 0            │          │
-│  └──────────────────┴─────────────┴──────────────┘          │
-│                                                              │
-│  Observasi:                                                 │
-│  - Static content lebih cepat 2-3x dibanding dynamic       │
-│  - Tidak ada failed requests                                │
-│  - Sistem stabil menangani 500 concurrent requests          │
-│                                                              │
-└──────────────────────────────────────────────────────────────┘
 ```
 
 ## LAMPIRAN
