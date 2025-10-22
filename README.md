@@ -32,29 +32,9 @@ Modul 2 praktikum Jaringan Komputer berfokus pada implementasi infrastruktur web
 - Melakukan performance benchmarking
 
 ### Topologi Jaringan
-```
-┌────────────────────────────────────────────────────┐
-│              CLIENT (Testing)                      │
-└─────────────────────┬────────────────────────────┘
-                      │ HTTP Request
-                      │ http://www.k53.com
-                      ▼
-           ┌──────────────────────┐
-           │    Sirion            │
-           │   10.90.3.2          │
-           │ Reverse Proxy        │
-           └──────────────────────┘
-           /                      \
-          /                        \
-         /                          \
-        ▼                            ▼
-   ┌────────────┐             ┌────────────┐
-   │  Lindon    │             │ Vingilot   │
-   │ 10.90.3.3  │             │ 10.90.3.4  │
-   │ Static Web │             │ Dynamic Web│
-   │   Server   │             │   Server   │
-   └────────────┘             └────────────┘
-```
+
+<img width="1221" height="1054" alt="image" src="https://github.com/user-attachments/assets/1f084e28-d3ca-4f22-ad07-0290192dbeb8"/>
+
 
 ### Spesifikasi Node
 
