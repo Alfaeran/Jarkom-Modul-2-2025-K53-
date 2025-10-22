@@ -478,17 +478,6 @@ lynx -dump http://lindon.k53.com/annals/
 └─────────────────────────────────────────────────────────────┘
 ```
 
-### Verifikasi Hasil
-
-- [x] Nginx berhasil diinstall dan berjalan
-- [x] Virtual host dikonfigurasi dengan dual hostname
-- [x] Static content dapat diakses via http://static.k53.com
-- [x] Static content dapat diakses via http://lindon.k53.com
-- [x] Directory listing berfungsi untuk /annals/
-- [x] HTTP 200 status diterima untuk request yang valid
-
----
-
 ## SOAL 10 - VINGILOT DYNAMIC WEB SERVER
 
 ### Deskripsi Soal
@@ -683,17 +672,6 @@ lynx -dump http://app.k53.com/about
 └─────────────────────────────────────────────────────────────┘
 ```
 
-### Verifikasi Hasil
-
-- [x] Nginx + PHP 8.4 FPM berhasil diinstall
-- [x] PHP-FPM socket Unix berhasil dikonfigurasi
-- [x] Application dapat diakses via http://app.k53.com
-- [x] URL rewriting berfungsi (/about -> /about.php)
-- [x] PHP code berhasil dieksekusi menampilkan informasi server
-- [x] Kedua hostname (app.k53.com dan vingilot.k53.com) dapat diakses
-
----
-
 ## SOAL 11 - SIRION REVERSE PROXY
 
 ### Deskripsi Soal
@@ -835,17 +813,6 @@ lynx -dump http://www.k53.com/app
 └─────────────────────────────────────────────────────────────┘
 ```
 
-### Verifikasi Hasil
-
-- [x] Nginx berhasil diinstall pada Sirion
-- [x] Path-based routing untuk /static ke Lindon berfungsi
-- [x] Path-based routing untuk /app ke Vingilot berfungsi
-- [x] Gateway homepage dapat diakses melalui www.k53.com
-- [x] Header forwarding (X-Real-IP, X-Forwarded-For) diteruskan ke backend
-- [x] Kedua hostname (www.k53.com dan sirion.k53.com) dapat diakses
-
----
-
 ## SOAL 12 - ADMIN PANEL WITH BASIC AUTHENTICATION
 
 ### Deskripsi Soal
@@ -960,18 +927,6 @@ lynx -auth=admin:admin123 -dump http://www.k53.com/admin/
 └─────────────────────────────────────────────────────────────┘
 ```
 
-### Verifikasi Hasil
-
-- [x] Apache utilities berhasil diinstall
-- [x] Password hash berhasil di-generate
-- [x] .htpasswd file memiliki permission yang benar
-- [x] Access tanpa credentials mengembalikan HTTP 401
-- [x] Access dengan wrong credentials mengembalikan HTTP 401
-- [x] Access dengan credentials yang benar berhasil
-- [x] Admin panel page tampil dengan sempurna
-- [x] Path lain (/static, /app) tetap accessible tanpa auth
-
----
 
 ## SOAL 13 - CANONICALIZATION DOMAIN REDIRECT
 
@@ -1071,16 +1026,6 @@ lynx -dump http://www.k53.com/static | head -20
 └─────────────────────────────────────────────────────────────┘
 ```
 
-### Verifikasi Hasil
-
-- [x] Dual server block dikonfigurasi dengan benar
-- [x] Request ke IP address 10.90.3.2 di-redirect dengan HTTP 301
-- [x] Request ke sirion.k53.com di-redirect dengan HTTP 301
-- [x] Request ke www.k53.com tidak di-redirect (HTTP 200)
-- [x] Request URI dipreservasi selama redirect
-- [x] Redirect persistent (HTTP 301 Moved Permanently)
-
----
 
 ## SOAL 14 - REAL IP TRACKING
 
@@ -1227,17 +1172,6 @@ tail -20 /var/log/nginx/vingilot_access.log
 └─────────────────────────────────────────────────────────────┘
 ```
 
-### Verifikasi Hasil
-
-- [x] Real IP configuration pada Vingilot diterapkan
-- [x] Check IP page dapat diakses
-- [x] REMOTE_ADDR menunjukkan IP client asli (setelah real_ip processing)
-- [x] X-Real-IP header diteruskan dengan benar
-- [x] X-Forwarded-For header menampilkan proxy chain
-- [x] Access log mencatat IP client asli, bukan IP Sirion
-- [x] Custom log format berfungsi dengan benar
-
----
 
 ## SOAL 15 - PERFORMANCE BENCHMARKING
 
@@ -1381,95 +1315,6 @@ echo "Results saved to benchmark_static.txt and benchmark_app.txt"
 │                                                              │
 └──────────────────────────────────────────────────────────────┘
 ```
-
-### Analisis Hasil
-
-**Expected Performance Characteristics:**
-
-Static Content (/static/):
-- Higher RPS (requests per second) karena hanya serving file
-- Lower response time karena no processing
-- Direct file serving dari Lindon
-- Network overhead minimal
-
-Dynamic Content (/app/):
-- Lower RPS dibanding static
-- Higher response time karena PHP processing
-- Overhead dari URL rewriting
-- PHP-FPM execution time
-- Reverse proxy processing
-
-**Performance Insights:**
-- Static biasanya 2-3x lebih cepat
-- System stability: Zero failed requests menunjukkan robustness
-- Concurrency handling: Level 10 ditangani dengan baik
-- Transfer rate menunjukkan bandwidth efficiency
-
-### Verifikasi Hasil
-
-- [x] ApacheBench berhasil diinstall
-- [x] Benchmark testing untuk static content berhasil
-- [x] Benchmark testing untuk dynamic content berhasil
-- [x] Metrics dikumpulkan dan dianalisis
-- [x] Static content lebih cepat dari dynamic
-- [x] Tidak ada failed requests
-- [x] System stabil menangani load
-
----
-
-## KESIMPULAN
-
-### Ringkasan Implementasi
-
-Praktikum Modul 2 telah berhasil mengimplementasikan infrastruktur web server modern dengan arsitektur yang terstruktur dan scalable. Keseluruhan sistem terdiri dari:
-
-1. **Lindon (Static Web Server)** - Menyajikan konten statis dengan directory listing
-2. **Vingilot (Dynamic Web Server)** - Menjalankan aplikasi PHP dengan URL rewriting modern
-3. **Sirion (Reverse Proxy)** - Melakukan routing intelligent dan gateway functionality
-4. **Security Layer** - Admin area dilindungi dengan Basic Authentication
-5. **Monitoring & Logging** - Real IP tracking dan access log documentation
-
-### Pencapaian Objektif
-
-- [x] Semua 7 soal (9-15) berhasil diimplementasikan
-- [x] Setiap service berjalan dengan baik dan stabil
-- [x] Reverse proxy routing berfungsi dengan sempurna
-- [x] Security implementation melalui authentication
-- [x] Performance karakteristik telah diukur dan dianalisis
-- [x] Dokumentasi lengkap dengan screenshots
-
-### Teknologi yang Digunakan
-
-| Komponen | Teknologi | Versi | Fungsi |
-|----------|-----------|--------|--------|
-| Web Server | Nginx | Latest | HTTP server & reverse proxy |
-| PHP Runtime | PHP-FPM | 8.4 | PHP application processor |
-| Testing Tool | ApacheBench | apache2-utils | Load testing & benchmarking |
-| Browser Text | Lynx | Latest | Terminal-based HTTP client |
-
-### Pembelajaran Kunci
-
-1. **Reverse Proxy Architecture** - Memahami path-based routing dan header forwarding
-2. **PHP-FPM Integration** - Integrasi efficient antara Nginx dan PHP melalui Unix socket
-3. **Security Practices** - HTTP Basic Auth dan path-based authorization
-4. **Performance Optimization** - Static vs dynamic content performance tradeoffs
-5. **Network Troubleshooting** - Real IP tracking dan header inspection
-
-### Rekomendasi untuk Pengembangan Lebih Lanjut
-
-1. Implementasi HTTPS/SSL untuk enkripsi traffic
-2. Load balancing multiple backend servers
-3. Caching strategies untuk optimize performance
-4. Monitoring tools untuk system health
-5. Database integration untuk persistent data
-
----
-
-**Laporan Praktikum Modul 2 - K53**  
-**Tanggal Laporan**: Oktober 2025  
-**Status**: Completed and Verified
-
----
 
 ## LAMPIRAN
 
