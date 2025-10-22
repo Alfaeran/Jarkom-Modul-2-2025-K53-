@@ -7,7 +7,7 @@
 ---
 
 ## DAFTAR ISI
-1. [Pendahuluan](#pendahuluan)\
+1. [Pendahuluan](#pendahuluan)
 2. [Soal 1](#soal-1)
 3. [Soal 2](#soal-2)
 4. [Soal 3](#soal-3)
