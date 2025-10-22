@@ -211,7 +211,7 @@ iptables -A FORWARD -i eth3 -o eth1 -j ACCEPT
 iptables -A FORWARD -i eth2 -o eth3 -j ACCEPT
 iptables -A FORWARD -i eth3 -o eth2 -j ACCEPT
 ```
-Aturan 'iptables -A FORWARD' yang kamu tulis berfungsi untuk mengizinkan lalu lintas antar interface jaringan (eth1, eth2, dan eth3). Dengan konfigurasi itu, paket yang masuk dari satu interface bisa diteruskan ke interface lain tanpa diblokir. Hasilnya, mesin Linux bertindak seperti router layer 3 yang menghubungkan ketiga jaringan tersebut.
+Aturan *iptables -A FORWARD* yang kamu tulis berfungsi untuk mengizinkan lalu lintas antar interface jaringan (eth1, eth2, dan eth3). Dengan konfigurasi itu, paket yang masuk dari satu interface bisa diteruskan ke interface lain tanpa diblokir. Hasilnya, mesin Linux bertindak seperti router layer 3 yang menghubungkan ketiga jaringan tersebut.
 
 Setelah itu, dari Node Earendil, ping ke 10.90.2.2 dan 10.90.3.2
 <img width="511" height="277" alt="image" src="https://github.com/user-attachments/assets/b1cdcdc0-4ab7-4b70-934e-f0d7e26f8cd4" />
@@ -294,10 +294,10 @@ named-checkconf
 named-checkzone k53.com /etc/bind/zones/db.k53.com
 service named restart
 ```
-- 'chown -R bind:bind /etc/bind/zones' → mengubah kepemilikan folder zone file agar user bind bisa mengaksesnya.
-- 'named-checkconf' → mengecek apakah file konfigurasi utama BIND (biasanya '/etc/named.conf') valid tanpa error.
-- 'named-checkzone k53.com /etc/bind/zones/db.k53.com' → memverifikasi file zone untuk domain k53.com, memastikan format dan isinya benar.
-- 'service named restart' → me-restart layanan DNS BIND supaya perubahan konfigurasi dan zone file diterapkan.
+- *chown -R bind:bind /etc/bind/zones* → mengubah kepemilikan folder zone file agar user bind bisa mengaksesnya.
+- *named-checkconf* → mengecek apakah file konfigurasi utama BIND (biasanya '/etc/named.conf') valid tanpa error.
+- *named-checkzone k53.com /etc/bind/zones/db.k53.com* → memverifikasi file zone untuk domain k53.com, memastikan format dan isinya benar.
+- *service named restart* → me-restart layanan DNS BIND supaya perubahan konfigurasi dan zone file diterapkan.
 
 Singkatnya, perintah ini dipakai saat kamu menambahkan atau mengubah zone/domain di BIND, untuk memastikan tidak ada error lalu mengaktifkan konfigurasinya.
 
