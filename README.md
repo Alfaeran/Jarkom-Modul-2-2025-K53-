@@ -60,10 +60,22 @@ Modul 2 praktikum Jaringan Komputer berfokus pada implementasi infrastruktur web
 
 | Node | IP Address | Hostname | Service | Role |
 |------|-----------|----------|---------|------|
-| Sirion | 10.90.3.2 | www.k53.com | Nginx | Reverse Proxy Gateway |
-| Lindon | 10.90.3.3 | static.k53.com | Nginx | Static Web Server |
-| Vingilot | 10.90.3.4 | app.k53.com | Nginx + PHP 8.4 FPM | Dynamic Web Server |
-| Elrond | - | - | ApacheBench | Testing Client |
+| Cirdan | 10.15.43.32:5341 | - | - | - |
+| Earendil | 10.15.43.32:5346 | - | - | - |
+| Elrond | 10.15.43.32:5342 | - | - | - |
+| Elwing | 10.15.43.32:5347 | - | - | - |
+| Eonwe | 10.15.43.32:5324 | - | - | - |
+| Lindon | 10.15.43.32:5354 | static.k53.com | Nginx | Static Web Server |
+| Maglor | 10.15.43.32:5343 | - | - | - |
+| NAT1 | none | - | - | - |
+| Sirion | 10.15.43.32:5349 | www.k53.com | Nginx | Reverse Proxy Gateway |
+| Switch1 | none | - | - | - |
+| Switch2 | none | - | - | - |
+| Switch3 | none | - | - | - |
+| Switch4 | none | - | - | - |
+| Tirion | 10.15.43.32:5352 | - | - | - |
+| Valmar | 10.15.43.32:5353 | - | - | - |
+| Vingilot | 10.15.43.32:5355 | app.k53.com | Nginx + PHP 8.4 FPM | Dynamic Web Server |
 
 ---
 
