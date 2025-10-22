@@ -7,15 +7,23 @@
 ---
 
 ## DAFTAR ISI
-1. [Pendahuluan](#pendahuluan)
-2. [Soal 9 - Lindon Static Web Server](#soal-9---lindon-static-web-server)
-3. [Soal 10 - Vingilot Dynamic Web Server](#soal-10---vingilot-dynamic-web-server)
-4. [Soal 11 - Sirion Reverse Proxy](#soal-11---sirion-reverse-proxy)
-5. [Soal 12 - Admin Panel with Basic Authentication](#soal-12---admin-panel-with-basic-authentication)
-6. [Soal 13 - Canonicalization Domain Redirect](#soal-13---canonicalization-domain-redirect)
-7. [Soal 14 - Real IP Tracking](#soal-14---real-ip-tracking)
-8. [Soal 15 - Performance Benchmarking](#soal-15---performance-benchmarking)
-9. [Kesimpulan](#kesimpulan)
+1. [Pendahuluan](#pendahuluan)\
+2. [Soal 1](#soal-1)
+3. [Soal 2](#soal-2)
+4. [Soal 3](#soal-3)
+5. [Soal 4](#soal-4)
+6. [Soal 5](#soal-5)
+7. [Soal 6](#soal-6)
+8. [Soal 7](#soal-7)
+9. [Soal 8](#soal-8)
+10. [Soal 9 - Lindon Static Web Server](#soal-9---lindon-static-web-server)
+11. [Soal 10 - Vingilot Dynamic Web Server](#soal-10---vingilot-dynamic-web-server)
+12. [Soal 11 - Sirion Reverse Proxy](#soal-11---sirion-reverse-proxy)
+13. [Soal 12 - Admin Panel with Basic Authentication](#soal-12---admin-panel-with-basic-authentication)
+14. [Soal 13 - Canonicalization Domain Redirect](#soal-13---canonicalization-domain-redirect)
+15. [Soal 14 - Real IP Tracking](#soal-14---real-ip-tracking)
+16. [Soal 15 - Performance Benchmarking](#soal-15---performance-benchmarking)
+17. [Kesimpulan](#kesimpulan)
 
 ---
 
@@ -59,7 +67,7 @@ Modul 2 praktikum Jaringan Komputer berfokus pada implementasi infrastruktur web
 
 ---
 
-## 1
+## SOAL 1
 
 Atur konfigurasi pada tiap node :
 
@@ -182,7 +190,7 @@ iface eth0 inet static
     up echo nameserver 192.168.122.1 > /etc/resolv.conf
 ```
 
-## 2
+## SOAL 2
 
 Jalankan
 ```
@@ -198,7 +206,7 @@ untuk memastikan perangkat di jaringan benar-benar bisa keluar ke internet lewat
 
 <img width="692" height="198" alt="image" src="https://github.com/user-attachments/assets/30bb2e0c-08f5-4373-8de0-f21276e27a70" />
 
-## 3
+## SOAL 3
 
 Jalankan
 ```
@@ -214,7 +222,7 @@ Aturan `iptables -A FORWARD` yang kamu tulis berfungsi untuk mengizinkan lalu li
 Setelah itu, dari Node Earendil, ping ke 10.90.2.2 dan 10.90.3.2
 <img width="511" height="277" alt="image" src="https://github.com/user-attachments/assets/b1cdcdc0-4ab7-4b70-934e-f0d7e26f8cd4" />
 
-## 4
+## SOAL 4
 
 Pada Node Tirion, install bind9 dnsutils
 ```
@@ -361,7 +369,7 @@ Jika berhasil, CTRL + C untuk kembali
 
 <img width="512" height="283" alt="image" src="https://github.com/user-attachments/assets/c6ba9c61-4c6f-48a1-89e0-3d0d2353e6b6" />
 
-## 5
+## SOAL 5
 
 Pastikan semua node sudah di rename pada GNS3. Setelah itu pada Node Tirion :
 masuk ke 
@@ -396,7 +404,7 @@ CTRL + C jika berhasil
 
 <img width="520" height="320" alt="image" src="https://github.com/user-attachments/assets/40daf309-f54d-4d44-844d-9b5c162121f8" />
 
-## 6
+## SOAL 6
 
 Pada Node Tirion, jalankan
 ```
@@ -433,7 +441,7 @@ Perintah `rndc retransfer k53.com` digunakan untuk memaksa server DNS slave meng
 
 <img width="928" height="642" alt="image" src="https://github.com/user-attachments/assets/ce683714-6e0f-43ea-ac4f-3675ec48f4ca" />
 
-## 7
+## SOAL 7
 
 Pada Node Tirion, masuk ke
 ```
@@ -466,7 +474,7 @@ Perintah `dig www.k53.com`, `dig static.k53.com`, dan `dig app.k53.com` masingâ€
 
 <img width="570" height="763" alt="image" src="https://github.com/user-attachments/assets/8bdf3d5a-74e1-4d6c-91b7-ab53d332726b" />
 
-## 8
+## SOAL 8
 
 Pada Node Tirion, masuk ke
 ```
